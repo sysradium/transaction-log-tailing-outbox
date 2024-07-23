@@ -74,7 +74,7 @@ func main() {
 	for {
 		if time.Now().After(nextStandbyMessageDeadline) {
 			err = pglogrepl.SendStandbyStatusUpdate(context.Background(), conn, pglogrepl.StandbyStatusUpdate{
-				WALWritePosition: clientXLogPos + 1,
+				WALWritePosition: clientXLogPos,
 				WALFlushPosition: 0,
 				WALApplyPosition: 0,
 				ClientTime:       time.Time{},

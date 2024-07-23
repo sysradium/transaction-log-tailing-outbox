@@ -15,7 +15,7 @@ services:
       - "$GOPATH/pkg:/go/pkg"
 
   db:
-    image: postgres:latest
+    image: postgres:16
     environment:
       POSTGRES_PASSWORD: some-password
       POSTGRES_DB: app
