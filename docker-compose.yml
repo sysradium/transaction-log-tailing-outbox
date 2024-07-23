@@ -1,0 +1,30 @@
+services:
+  publisher:
+    working_dir: /usr/local/app/publisher
+    image: golang:1.22-alpine
+    volumes:
+      - ./:/usr/local/app
+      - "$GOPATH/pkg:/go/pkg"
+    environment:
+      PGLOGREPL_DEMO_CONN_STRING: "postgres://postgres:some-password@db/app?replication=database"
+  consumer:
+    working_dir: /usr/local/app/consumer
+    image: golang:1.22-alpine
+    volumes:
+      - ./:/usr/local/app
+      - "$GOPATH/pkg:/go/pkg"
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: some-password
+      POSTGRES_DB: app
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+
+volumes:
+  db-data:
